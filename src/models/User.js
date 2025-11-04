@@ -9,12 +9,12 @@ class User {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const [result] = await db.execute(
-      'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
+      'INSERT INTO tb_users (username, email, password) VALUES (?, ?, ?)',
       [username, email, hashedPassword]
     );
 
     // Buat statistik awal untuk user
-    await db.execute('INSERT INTO user_statistics (user_id) VALUES (?)', [result.insertId]);
+    await db.execute('INSERT INTO tb_user_statistics (user_id) VALUES (?)', [result.insertId]);
 
     return result.insertId;
   }
@@ -23,7 +23,7 @@ class User {
    * Cari user berdasarkan email
    */
   static async findByEmail(email) {
-    const [rows] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+    const [rows] = await db.execute('SELECT * FROM tb_users WHERE email = ?', [email]);
     return rows[0];
   }
 
@@ -31,7 +31,7 @@ class User {
    * Cari user berdasarkan username
    */
   static async findByUsername(username) {
-    const [rows] = await db.execute('SELECT * FROM users WHERE username = ?', [username]);
+    const [rows] = await db.execute('SELECT * FROM tb_users WHERE username = ?', [username]);
     return rows[0];
   }
 
@@ -40,7 +40,7 @@ class User {
    */
   static async findById(id) {
     const [rows] = await db.execute(
-      'SELECT id, username, email, created_at FROM users WHERE id = ?',
+      'SELECT id, username, email, created_at FROM tb_users WHERE id = ?',
       [id]
     );
     return rows[0];
@@ -83,7 +83,7 @@ class User {
     values.push(id);
 
     const [result] = await db.execute(
-      `UPDATE users SET ${fields.join(', ')} WHERE id = ?`,
+      `UPDATE tb_users SET ${fields.join(', ')} WHERE id = ?`,
       values
     );
 
@@ -94,7 +94,7 @@ class User {
    * Delete user
    */
   static async delete(id) {
-    const [result] = await db.execute('DELETE FROM users WHERE id = ?', [id]);
+    const [result] = await db.execute('DELETE FROM tb_users WHERE id = ?', [id]);
     return result.affectedRows > 0;
   }
 
@@ -102,7 +102,7 @@ class User {
    * Cek apakah email sudah ada
    */
   static async emailExists(email) {
-    const [rows] = await db.execute('SELECT id FROM users WHERE email = ?', [email]);
+    const [rows] = await db.execute('SELECT id FROM tb_users WHERE email = ?', [email]);
     return rows.length > 0;
   }
 
@@ -110,7 +110,7 @@ class User {
    * Cek apakah username sudah ada
    */
   static async usernameExists(username) {
-    const [rows] = await db.execute('SELECT id FROM users WHERE username = ?', [username]);
+    const [rows] = await db.execute('SELECT id FROM tb_users WHERE username = ?', [username]);
     return rows.length > 0;
   }
 }
