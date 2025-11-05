@@ -86,6 +86,17 @@ class Todo {
     }
 
     /**
+     * Update todos status
+     */
+    static async updateTaskDone(id) {
+        const [result] = await db.execute(
+            'UPDATE tb_todos SET task_progress = "done", last_progress_reset = NOW() WHERE id = ?',
+            [id]
+        );
+        return result.affectedRows > 0;
+    }
+
+    /**
      * Delete todos
      */
     static async delete(id) {
@@ -97,7 +108,7 @@ class Todo {
      * Cek maksimal todo per user
      */
     static async maxTodosPerUser(userId) {
-        const [rows] = await db.execute('SELECT COUNT(*) as count FROM tb_todos WHERE user_id = ?', [userId]);
+        const [rows] = await db.execute('SELECT COUNT(*) as count FROM tb_todos WHERE user_id = ? AND status = "active"', [userId]);
         return rows[0].count;
     }
 }

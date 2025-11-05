@@ -1,11 +1,11 @@
 import express from 'express';
 import * as TodoController from '../controllers/todoController.js';
-import authMiddleware from '../middlewares/authMiddleware.js';
+import { authenticate } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
 // Semua route memerlukan autentikasi
-router.use(authMiddleware);
+router.use(authenticate);
 
 // Create todo
 router.post('/', TodoController.createTodo);
@@ -21,6 +21,7 @@ router.put('/:id', TodoController.updateTodo);
 
 // Update todo status
 router.patch('/status/:id', TodoController.updateTodoStatus);
+router.patch('/progress/:id', TodoController.updateTodoTaskDone);
 
 // Delete todo
 router.delete('/:id', TodoController.deleteTodo);

@@ -9,7 +9,12 @@
     "dev": "nodemon --trace-warnings server.js",
     "migrate": "node src/database/migrations/run-migration.js"
   },
-  "keywords": ["todo", "reminder", "nodejs", "express"],
+  "keywords": [
+    "todo",
+    "reminder",
+    "nodejs",
+    "express"
+  ],
   "author": "Heiwa Al Kahfi & Rifqi Ihsan",
   "license": "ISC",
   "dependencies": {
@@ -19,7 +24,8 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.15.3",
-    "node-cron": "^4.2.1"
+    "node-cron": "^4.2.1",
+    "telegraf": "^4.16.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"

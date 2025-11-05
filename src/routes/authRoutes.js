@@ -1,6 +1,7 @@
 import express from 'express';
 import * as authController from '../controllers/authController.js';
 import { authenticate } from '../middlewares/authMiddleware.js';
+import { linkTelegram } from '../controllers/telegramController.js';
 
 const router = express.Router();
 
@@ -45,5 +46,12 @@ router.put('/password', authenticate, authController.updatePassword);
  * @access  Private
  */
 router.delete('/account', authenticate, authController.deleteAccount);
+
+/**
+ * @route   PUT /api/auth/telegram
+ * @desc    Link Telegram account
+ * @access  Private
+ */
+router.put('/telegram', authenticate, linkTelegram);
 
 export default router;

@@ -4,8 +4,8 @@ import { checkAndSendReminders } from '../services/reminderService.js';
 import { info, error as _error } from '../utils/logger.js';
 
 export function initCronJobs() {
-  // Cron untuk cek reminder (setiap 5 menit)
-  const reminderSchedule = process.env.REMINDER_CRON_SCHEDULE || '*/5 * * * *';
+  // Cron untuk cek reminder (setiap 1 menit)
+  const reminderSchedule = process.env.REMINDER_CRON_SCHEDULE || '*/1 * * * *';
   schedule(reminderSchedule, async () => {
     info('🔔 Running reminder checker...');
     try {

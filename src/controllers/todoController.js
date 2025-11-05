@@ -133,6 +133,32 @@ export async function updateTodoStatus(req, res) {
 }
 
 /**
+ * Update todo task done
+ */
+export async function updateTodoTaskDone(req, res) {
+    try {
+        const { id } = req.params;
+        const userId = req.user.id;
+
+        // Verifikasi todo milik user
+        const todo = await Todo.findOne(id, userId);
+        if (!todo || todo.user_id !== userId) {
+            return res.status(404).json({ message: 'Reminder yang kamu pilih tidak ditemukan' });
+        }
+
+        const updated = await Todo.updateTaskDone(id);
+
+        if (!updated) {
+            return res.status(400).json({ message: 'Gagal memperbarui status' });
+        }
+
+        res.status(200).json({ message: 'Status berhasil diperbarui' });
+    } catch (error) {
+        res.status(500).json({ message: 'Maaf ada error, akan segera kami perbaiki', error: error.message });
+    }
+}
+
+/**
  * Delete todo
  */
 export async function deleteTodo(req, res) {

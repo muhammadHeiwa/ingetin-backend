@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import app from './src/config/app.js';
 import { initCronJobs } from './src/config/cron.js';
 import logger from './src/utils/logger.js';
+import { startTelegramBot } from './src/integration/telegram.js';
 
 // Load environment variables
 dotenv.config();
@@ -9,13 +10,14 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 // Start server
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, async () => {
   logger.info(`🚀 Server running on port ${PORT} in ${process.env.NODE_ENV} mode`);
   logger.info(`📡 API Base URL: http://localhost:${PORT}/api`);
 
   // Initialize cron jobs setelah server berjalan
   try {
     initCronJobs();
+    await startTelegramBot(app);
     logger.info('⏰ Cron jobs initialized');
   } catch (error) {
     logger.error('Failed to initialize cron jobs:', error);
