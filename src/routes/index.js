@@ -1,5 +1,6 @@
 import express from 'express';
 import authRoutes from './authRoutes.js';
+import todoRoutes from './todoRoutes.js';
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router.get('/', (req, res) => {
     version: '1.0.0',
     endpoints: {
       auth: '/api/auth',
-      todos: '/api/todos (coming soon)',
+      todos: '/api/reminder',
       stats: '/api/stats (coming soon)',
     },
   });
@@ -20,13 +21,10 @@ router.get('/', (req, res) => {
 // Import routes dengan error handling
 try {
   router.use('/auth', authRoutes);
+  router.use('/reminder', todoRoutes);
 } catch (error) {
   console.error('Error loading auth routes:', error.message);
 }
-
-// Todo routes (akan dibuat nanti)
-// import todoRoutes from './todoRoutes.js';
-// router.use('/todos', todoRoutes);
 
 // Statistics routes (akan dibuat nanti)
 // import statsRoutes from './statsRoutes.js';
