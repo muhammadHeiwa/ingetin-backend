@@ -2,4 +2,7 @@ node_modules/
 .env
 logs/*.log
 *.log
-.DS_Store
+.DS_Store.env
+.env.*
+*.key
+*.pem
